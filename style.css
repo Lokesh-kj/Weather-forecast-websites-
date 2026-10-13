@@ -1,65 +1,66 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2193b0, #6dd5ed);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-.weather-box {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
-h1 {
-    color: #167d9a;
-    margin-bottom: 25px;
-    font-size: 27px;
-}
+h1 { margin-bottom: 20px; color: #333; }
+
+.search-box { display: flex; gap: 10px; margin-bottom: 20px; }
 
 input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 16px;
+  flex: 1;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    background: #167d9a;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 12px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-button:hover {
-    background: #105d73;
+button:hover { background: #5568d3; }
+
+.weather-card { padding: 20px 0; }
+
+.weather-card img { width: 100px; }
+
+.temp { font-size: 48px; font-weight: bold; color: #333; }
+
+.details {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  color: #555;
 }
 
-#weather-result {
-    margin-top: 25px;
-    line-height: 1.8;
-    color: #333;
-}
+.hidden { display: none; }
 
-#weather-result h2 {
-    color: #167d9a;
-}
+.error { color: red; margin-top: 10px; }
