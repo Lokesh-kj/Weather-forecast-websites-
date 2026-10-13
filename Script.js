@@ -1,53 +1,43 @@
-const API_KEY = "YOUR_API_KEY";
+const apiKey = "YOUR_API_KEY_HERE"; // paste your key here
 
 async function getWeather() {
-    const city = document.getElementById("city").value.trim();
-    const result = document.getElementById("weather-result");
+  const city = document.getElementById("cityInput").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
+  const card = document.getElementById("weatherDisplay");
 
-    if (city === "") {
-        result.innerHTML = "<p>Please enter a city name!</p>";
-        return;
-    }
+  if (!city) return;
 
-    if (API_KEY === "YOUR_API_KEY") {
-        result.innerHTML = "<p>Please add your weather API key in script.js.</p>";
-        return;
-    }
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+    const response = await fetch(url);
 
-    result.innerHTML = "<p>Loading weather...</p>";
+    if (!response.ok) throw new Error("City not found");
 
-    try {
-        const url =
-            `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
+    const data = await response.json();
 
-        const response = await fetch(url);
-        const data = await response.json();
+    document.getElementById("cityName").textContent =
+      data.name + ", " + data.sys.country;
+    document.getElementById("weatherIcon").src =
+      `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    document.getElementById("temperature").textContent =
+      Math.round(data.main.temp) + "°C";
+    document.getElementById("description").textContent =
+      data.weather[0].description;
+    document.getElementById("humidity").textContent = data.main.humidity;
+    document.getElementById("wind").textContent = data.wind.speed;
+    document.getElementById("feelsLike").textContent =
+      Math.round(data.main.feels_like);
 
-        if (!response.ok) {
-            throw new Error(data.message || "Unable to get weather.");
-        }
-
-        const temperature = data.main.temp;
-        const humidity = data.main.humidity;
-        const wind = data.wind.speed;
-        const condition = data.weather[0].description;
-        const icon = data.weather[0].icon;
-
-        result.innerHTML = `
-            <h2>${data.name}, ${data.sys.country}</h2>
-
-            <img
-                src="https://openweathermap.org/img/wn/${icon}@2x.png"
-                alt="${condition}">
-
-            <h2>${temperature} °C</h2>
-
-            <p>Condition: ${condition}</p>
-            <p>Humidity: ${humidity}%</p>
-            <p>Wind Speed: ${wind} m/s</p>
-        `;
-
-    } catch (error) {
-        result.innerHTML = `<p>Error: ${error.message}</p>`;
-    }
+    card.classList.remove("hidden");
+    errorMsg.classList.add("hidden");
+  } catch (error) {
+    errorMsg.textContent = "❌ " + error.message;
+    errorMsg.classList.remove("hidden");
+    card.classList.add("hidden");
+  }
 }
+
+// Search on Enter key
+document.getElementById("cityInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") getWeather();
+});
